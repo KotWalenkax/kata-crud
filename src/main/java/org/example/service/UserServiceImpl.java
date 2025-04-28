@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.dao.UserDao;
+import org.example.exception.UserNotFoundException;
 import org.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,24 +20,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
+    public void update(Long id, User updatedUser) {
+        User user = findById(id);
+        user.setName(updatedUser.getName());
+        user.setAge(updatedUser.getAge());
         userDao.update(user);
     }
 
     @Override
     public void deleteById(long id) {
-        userDao.deleteById(id);
+        User user = findById(id);
+        userDao.deleteById(user.getId());
     }
 
     @Override
-    public User findById(long id) {
-        userDao.findById(id);
-        return userDao.findById(id);
+    public User findById(long id) throws UserNotFoundException {
+        User user = userDao.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("User with id " + id + " not found");
+        } else return user;
     }
 
     @Override
     public List<User> findAll() {
-        userDao.findAll();
         return userDao.findAll();
     }
 }

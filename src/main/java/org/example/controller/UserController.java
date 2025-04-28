@@ -46,11 +46,7 @@ public class UserController {
 
     @PostMapping("/edit")
     public String saveEditedUser(@RequestParam("id") Long id, @ModelAttribute User updatedUser, Model model) {
-        User user = userService.findById(id);
-        user.setName(updatedUser.getName());
-        user.setAge(updatedUser.getAge());
-        userService.update(user);
-
+        userService.update(id, updatedUser);
         return "redirect:/users";
     }
 }

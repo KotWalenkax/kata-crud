@@ -34,13 +34,11 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public User findById(long id) {
-        User user = em.find(User.class, id);
-        return user;
+        return em.find(User.class, id);
     }
 
     @Override
     public List<User> findAll() {
-        List<User> users = em.createQuery("from User").getResultList();
-        return users;
+        return (List<User>) em.createQuery("from User").getResultList();
     }
 }
