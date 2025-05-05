@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDaoHibernateImpl implements UserDao {
@@ -33,8 +34,8 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public User findById(long id) {
-        return em.find(User.class, id);
+    public Optional<User> findById(long id) {
+        return Optional.of(em.find(User.class, id));
     }
 
     @Override
